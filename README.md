@@ -23,7 +23,8 @@ The two required roles are generated using `ansible-galaxy init` so the director
 
 Run these commands inside the `ansible` directory:
 
-cd ansible
+```cd ansible``` and then run these commands 
+--
 ansible-galaxy init --init-path roles frontend_server
 --
 ansible-galaxy init --init-path roles redis_server
