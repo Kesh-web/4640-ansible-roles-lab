@@ -15,3 +15,23 @@ cd 4640-ansible-roles-lab
 ### 2. Create AWS SSH Key
 ssh-keygen -t ed25519 -f ~/.ssh/aws
 
+After we ran the import key script.
+
+
+### Create Ansible Roles
+The two required roles are generated using `ansible-galaxy init` so the directory structure follows Ansible best practices.
+
+Run these commands inside the `ansible` directory:
+
+cd ansible
+ansible-galaxy init --init-path roles frontend_server
+ansible-galaxy init --init-path roles redis_server
+
+This creates:
+
+ansible/roles/frontend_server/
+ansible/roles/redis_server/
+
+Both roles contain tasks/, handlers/, templates/, files/, and vars/ directories where all configuration, templates, and files were moved.
+
+
