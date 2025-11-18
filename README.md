@@ -27,7 +27,7 @@ cd ansible
 ansible-galaxy init --init-path roles frontend_server
 --
 ansible-galaxy init --init-path roles redis_server
-
+--
 This creates:
 
 ansible/roles/frontend_server/
