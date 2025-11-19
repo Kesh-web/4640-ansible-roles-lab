@@ -84,28 +84,31 @@ Each role created by Ansible Galaxy includes the following directories:
 
 ## Refactoring Ansible Configuration
 
-The original `plays.yml` was refactored into two separate roles:
+The roles (`frontend_server` and `redis_server`) were already generated earlier using Ansible Galaxy.  
+The next step was to refactor the original `plays.yml` into the proper role structure.
 
-- `frontend_server` (Ubuntu nginx frontend)
-- `redis_server` (Rocky Linux backend)
+### Moving Existing Configuration Into Roles
 
-### Generate Roles
-cd ansible
-ansible-galaxy init --init-path roles frontend_server
-ansible-galaxy init --init-path roles redis_server
+All frontend-related files from the starter project were moved into the `frontend_server` role:
 
-### Move Old Files Into the Correct Role
-All nginx and HTML-related content from the starter code was moved into the `frontend_server` role:
+- files/default.conf → roles/frontend_server/files/default.conf
+- templates/index.html.j2 → roles/frontend_server/templates/index.html.j2
 
-- `files/default.conf` → roles/frontend_server/files/default.conf
-- `templates/index.html.j2` → roles/frontend_server/templates/index.html.j2
+All related nginx tasks were added to:
 
-The backend-related logic from `plays.yml` was placed into:
+roles/frontend_server/tasks/main.yml
 
-- roles/redis_server/tasks/main.yml
+A handler was added to reload nginx when templates or configs change:
 
-### New Playbook (playbook.yml)
-The new `playbook.yml` replaces the old `plays.yml` and assigns each role to its corresponding EC2 server group:
+roles/frontend_server/handlers/main.yml
+
+Backend-related logic from `plays.yml` was moved into:
+
+roles/redis_server/tasks/main.yml
+
+### New Playbook
+
+A new `playbook.yml` replaced the old `plays.yml` and assigns roles to their AWS EC2 groups discovered by the dynamic inventory plugin:
 
 - hosts: frontend
   roles:
@@ -115,10 +118,11 @@ The new `playbook.yml` replaces the old `plays.yml` and assigns each role to its
   roles:
     - redis_server
 
-The original `plays.yml` was deleted after confirming the new playbook worked.
+The old `plays.yml` was removed after the refactor.
 
-### Running the Final Ansible Configuration
-From the `ansible` directory, run:
+### Running Ansible
+
+From inside the `ansible` directory:
 
 ansible-playbook -i inventory/aws_ec2.yml playbook.yml
 
