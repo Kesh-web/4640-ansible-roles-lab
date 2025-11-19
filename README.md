@@ -128,5 +128,6 @@ ansible-playbook -i inventory/aws_ec2.yml playbook.yml
 
 
 
+<img width="613" height="314" alt="server-img" src="https://github.com/user-attachments/assets/2f58bdb7-ec6b-4fda-9a67-186e21786ca6" />
 
 
