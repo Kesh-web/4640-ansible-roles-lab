@@ -34,6 +34,18 @@ This creates:
 ansible/roles/frontend_server/
 ansible/roles/redis_server/
 
-Both roles contain tasks/, handlers/, templates/, files/, and vars/ directories where all configuration, templates, and files were moved.
+Each role created by Ansible Galaxy includes the following directories:
+
+- defaults/
+- files/
+- handlers/
+- meta/
+- tasks/
+- templates/
+- tests/
+- vars/
+
+
+
 
 
