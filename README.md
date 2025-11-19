@@ -82,8 +82,45 @@ Each role created by Ansible Galaxy includes the following directories:
 - vars/
 
 
+## Refactoring Ansible Configuration
 
+The original `plays.yml` was refactored into two separate roles:
 
+- `frontend_server` (Ubuntu nginx frontend)
+- `redis_server` (Rocky Linux backend)
+
+### Generate Roles
+cd ansible
+ansible-galaxy init --init-path roles frontend_server
+ansible-galaxy init --init-path roles redis_server
+
+### Move Old Files Into the Correct Role
+All nginx and HTML-related content from the starter code was moved into the `frontend_server` role:
+
+- `files/default.conf` → roles/frontend_server/files/default.conf
+- `templates/index.html.j2` → roles/frontend_server/templates/index.html.j2
+
+The backend-related logic from `plays.yml` was placed into:
+
+- roles/redis_server/tasks/main.yml
+
+### New Playbook (playbook.yml)
+The new `playbook.yml` replaces the old `plays.yml` and assigns each role to its corresponding EC2 server group:
+
+- hosts: frontend
+  roles:
+    - frontend_server
+
+- hosts: backend
+  roles:
+    - redis_server
+
+The original `plays.yml` was deleted after confirming the new playbook worked.
+
+### Running the Final Ansible Configuration
+From the `ansible` directory, run:
+
+ansible-playbook -i inventory/aws_ec2.yml playbook.yml
 
 
 
