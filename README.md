@@ -6,6 +6,21 @@ Kesh Alfred Leeanne
 
 This lab provisions two AWS EC2 instances (Ubuntu frontend and Rocky Linux backend) using Terraform and configures both using Ansible with a dynamic AWS EC2 inventory. All configuration has been refactored into roles, and handlers/templates/files are placed inside each role following Ansible best practices.
 
+## Prerequisites
+
+Install required packages for Ansible and the AWS dynamic inventory plugin:
+
+sudo apt update
+sudo apt install -y python3-pip
+
+# Install AWS Python SDK dependencies for ansible aws_ec2 plugin
+sudo pip3 install boto3 botocore
+
+# Verify installation
+python3 --version
+pip3 --version
+
+
 ## Setup
 
 ### 1. Clone Starter Code
