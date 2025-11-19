@@ -33,6 +33,27 @@ ssh-keygen -t ed25519 -f ~/.ssh/aws
 After we ran the import key script.
 
 
+## Deploying Infrastructure with Terraform
+
+After installing prerequisites and creating your AWS SSH key, run Terraform to create the two EC2 servers.
+
+### Initialize Terraform
+cd terraform
+terraform init
+
+### Review the plan
+terraform plan
+
+### Apply and deploy the infrastructure
+terraform apply -auto-approve
+
+Terraform will provision:
+- Ubuntu EC2 instance (frontend server)
+- Rocky Linux EC2 instance (backend server)
+
+The output will include the public IP addresses used by Ansible during configuration.
+
+
 ### Create Ansible Roles
 The two required roles are generated using `ansible-galaxy init` so the directory structure follows Ansible best practices.
 
@@ -59,6 +80,10 @@ Each role created by Ansible Galaxy includes the following directories:
 - templates/
 - tests/
 - vars/
+
+
+
+
 
 
 
