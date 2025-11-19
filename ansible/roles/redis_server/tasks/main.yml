@@ -1,0 +1,14 @@
+#SPDX-License-Identifier: MIT-0
+---
+# tasks for redis_server role
+- name: Install redis on Rocky Linux
+  ansible.builtin.dnf:
+    name: redis
+    state: present
+  when: "'server_role_redis_server' in group_names and ansible_facts['distribution'] == 'Rocky'"
+- name: Ensure redis is enabled and started
+  ansible.builtin.service:
+    name: redis
+    state: started
+    enabled: true
+  when: "'server_role_redis_server' in group_names and ansible_facts['distribution'] == 'Rocky'"
